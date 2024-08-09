@@ -1,0 +1,9 @@
+pyproject.toml
+src/atefar/__init__.py
+src/atefar/paper_analysis.py
+src/atefar/pdf_utils.py
+src/atefar.egg-info/PKG-INFO
+src/atefar.egg-info/SOURCES.txt
+src/atefar.egg-info/dependency_links.txt
+src/atefar.egg-info/requires.txt
+src/atefar.egg-info/top_level.txt
