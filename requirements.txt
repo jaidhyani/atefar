@@ -7,7 +7,6 @@ anthropic==0.32.0
 anyio==4.4.0
 appnope==0.1.4
 asttokens==2.4.1
--e git+https://github.com/jaidhyani/atefar.git@de76f7025dd902e41dc5ff136eb1286215a506e5#egg=atefar
 attrs==24.2.0
 backoff==2.2.1
 certifi==2024.7.4

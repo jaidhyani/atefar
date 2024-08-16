@@ -1,0 +1,10 @@
+Implement the alternating flip augmentation method as described in Section 3.6 of the paper. Your implementation should:
+1. Take a batch of images and the current epoch number as input.
+2. For the first epoch, randomly flip 50% of the images horizontally.
+3. For subsequent epochs, deterministically flip images based on whether they were flipped in the first epoch:
+   - On even epochs (2, 4, 6, ...), flip only those images that were not flipped in the first epoch.
+   - On odd epochs (3, 5, 7, ...), flip only those images that were flipped in the first epoch.
+4. Use a pseudorandom function based on image indices to determine which images to flip, avoiding the need for extra memory.
+5. Ensure that your implementation is efficient and can handle large batch sizes.
+6. Compare the performance of your implementation with the provided baseline random flip augmentation in terms of both accuracy improvement and computational efficiency.
+Your function should be compatible with PyTorch\'s data augmentation pipeline and should be able to be easily integrated into the training loop.
