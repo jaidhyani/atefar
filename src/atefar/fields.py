@@ -1,12 +1,9 @@
-from atefar.sig_types import GenericField
+from dataclasses import dataclass
 
+import dspy
 
-JSON_FORMATTING_INSTRUCTION = ""
-"""
-    The output should be parsable JSON. Any comments or notes should be included as 
-    strings in the JSON object, though in general additional comments are not expected. 
-    Do not output any text which would cause a JSON parser to fail.
-"""
+from atefar.dspy_utils import GenericField
+
 
 paper_content = GenericField(
     "paper_content", 
@@ -30,6 +27,7 @@ abstract_plus = GenericField(
     interesting aspects of the paper not otherwise covered in the abstract
     """
 )
+
 quantitative_results_json = GenericField(
     "quantitative_results_json",
     """
@@ -112,8 +110,6 @@ hw_agnostic_metrics_json = GenericField(
             "equivalence_justification": "More iterations generally lead to longer training times, but this metric is independent of hardware"
         }
     ]
-
-    {JSON_FORMATTING_INSTRUCTION}
     """
 )
 

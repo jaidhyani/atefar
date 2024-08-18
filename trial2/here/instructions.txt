@@ -1,0 +1,36 @@
+Task 1: Implement Alternating Flip Augmentation
+Implement the alternating flip augmentation method as described in Section 3.6 of the paper. Your implementation should:
+1. Take a batch of images and the current epoch number as inputs.
+2. For the first epoch (epoch 0), randomly flip 50% of the images horizontally.
+3. For subsequent epochs:
+   - On even epochs (2, 4, 6, ...), flip only those images that were not flipped in the first epoch.
+   - On odd epochs (3, 5, 7, ...), flip only those images that were flipped in the first epoch.
+4. Use a deterministic method (e.g., hashing) to decide which images to flip, ensuring consistency across epochs.
+5. Return the augmented batch of images.
+Your implementation should be efficient and not significantly slow down the training process. Use PyTorch tensor operations for best performance.
+
+Task 2: Optimize Network Architecture
+Implement the optimized network architecture described in Section 3.1 and Appendix A of the paper. Your implementation should:
+1. Create a PyTorch nn.Module that represents the entire network.
+2. Implement the following key components:
+   a. A 2x2 convolution with no padding as the first layer.
+   b. Three blocks of convolutional layers with BatchNorm and GELU activations.
+   c. MaxPooling layers between blocks.
+   d. A final linear layer with appropriate scaling.
+3. Use the channel widths specified in the paper for each block.
+4. Implement the Conv, BatchNorm, and ConvGroup classes as described in Appendix A.
+5. Ensure the network is compatible with half-precision (float16) training.
+6. Initialize the network weights according to the paper's specifications, including identity initialization for convolutional layers.
+
+Task 3: Implement Patch Whitening Initialization
+Implement the patch whitening initialization for the first convolutional layer as described in Section 3.2 of the paper. Your implementation should:
+1. Take the first convolutional layer (nn.Conv2d) and a batch of training images as inputs.
+2. Extract 2x2 patches from the input images.
+3. Compute the covariance matrix of these patches.
+4. Perform eigendecomposition on the covariance matrix.
+5. Initialize the convolutional layer weights using the eigenvectors and eigenvalues:
+   a. Scale the eigenvectors by the inverse square root of their corresponding eigenvalues.
+   b. Set the first half of the filters to these scaled eigenvectors.
+   c. Set the second half to the negation of the first half.
+6. Add a small epsilon to the eigenvalues to prevent numerical issues.
+7. Return the initialized convolutional layer.
