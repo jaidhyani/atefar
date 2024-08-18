@@ -1,0 +1,8 @@
+Implement the alternating flip augmentation method as described in the paper. Your implementation should:
+1. Take a batch of images and the current epoch number as inputs.
+2. For the first epoch, randomly flip 50% of the images horizontally.
+3. For subsequent epochs, deterministically flip images based on whether they were flipped in the first epoch:
+   - On even epochs, flip only those images that were not flipped in the first epoch.
+   - On odd epochs, flip only those images that were flipped in the first epoch.
+4. Use a pseudorandom function based on image indices to determine which images to flip, avoiding the need for extra memory.
+Your implementation should be efficient and work with PyTorch tensors. Compare your results with the provided baseline random flip implementation to ensure correctness and measure performance improvements. Pay special attention to handling edge cases and ensuring that the alternating pattern is maintained across epochs.
