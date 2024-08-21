@@ -1,4 +1,4 @@
-from atefar.sig_types import GenericField
+from atefar.dspy_utils import GenericField
 
 
 JSON_FORMATTING_INSTRUCTION = ""
