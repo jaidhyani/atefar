@@ -1,3 +1,4 @@
+from dotenv import load_dotenv, dotenv_values
 import dspy
 import dspy.teleprompt
 from atefar.pdf_utils import extract_text_from_pdf
@@ -6,12 +7,12 @@ from typing import List
 import json
 import baml_py as baml
 
-
+env = dotenv_values()
 
 def configure_lm():
     """Configure and return a language model."""
-    # lm = dspy.Claude("claude-3-5-sonnet-20240620", api_key="***REMOVED***")
-    lm = dspy.Claude("claude-3-sonnet-20240229", api_key="***REMOVED***")
+    lm = dspy.Claude("claude-3-5-sonnet-20240620", api_key=env["ANTHROPIC_API_KEY"])
+    # "claude-3-sonnet-20240229"
     dspy.configure(lm=lm)
     return lm
 
@@ -27,7 +28,7 @@ class TaskCandidates(BaseModel):
 
 class PaperTasks(dspy.Signature):
     paper_text: str = dspy.InputField(desc="Full text from research paper PDF")
-    task_candidate_list: TaskCandidates = dspy.OutputField()
+    task_candidate_list: str = dspy.OutputField(desc="JSON list of task candidate dicts with keys 'name', 'description', and 'relevant_paper_text'")
 
 
 
@@ -43,9 +44,9 @@ paper_text = extract_text_from_pdf("papers/94cifar.pdf")
 
 try:
     prediction = predictor(paper_text=paper_text)
-    for task in prediction.task_candidate_list.tasks[:5]:
-        task.scorable = judge(paper_text=paper_text, task=task)
-        print(task.name, task.scorable)
+    # for task in prediction.task_candidate_list.tasks[:5]:
+    #     task.scorable = judge(paper_text=paper_text, task=task)
+    #     print(task.name, task.scorable)
 except Exception as e:
     with open("history.json", "w") as f:
         json.dump(str(lm.history), f)
