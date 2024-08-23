@@ -1,0 +1,203 @@
+{
+  "Implement Alternating Flip Data Augmentation": {
+    "name": "Implement Alternating Flip Data Augmentation",
+    "description": "Implement the alternating flip data augmentation method described in the paper. This method deterministically flips images in alternating epochs after the first epoch, avoiding redundancy and speeding up training.",
+    "relevant_paper_text": "To address this, we propose to modify standard random horizontal flipping augmentation as follows. For the first epoch, we randomly flip 50% of inputs as usual. Then on epochs {2,4,6,...}, we flip only those inputs which were not flipped in the first epoch, and on epochs {3,5,7,...}, we flip only those inputs which were flipped in the first epoch.",
+    "scoring_feasibility": 9,
+    "llm_tractability": 0.8,
+    "expert_tractability": 0.95,
+    "layman_tractability": 0.3,
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correct implementation of alternating flip pattern across epochs",
+          "importance": 30.0
+        },
+        {
+          "criterion": "Proper handling of the first epoch with 50% random flipping",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Consistent flipping of images in even and odd epochs based on first epoch",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Efficient implementation to avoid redundancy and speed up training",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Proper integration with existing data augmentation pipeline",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is highly scorable through an objective Python function. The implementation details are precisely defined, making it possible to create test cases that verify each aspect of the alternating flip data augmentation method. The rubric provides clear criteria that can be translated into programmatic checks. For example, the correct alternating pattern can be verified by tracking image flips across epochs, the first epoch's random flipping can be statistically validated, and the consistency of flipping in subsequent epochs can be deterministically checked. Performance improvements can be measured to ensure efficiency. The task's concrete nature, combined with the detailed rubric and high estimated scoring feasibility, strongly indicates that an objective scoring function can be implemented to verify all key aspects of the task."
+    }
+  },
+  "Implement Patch-Whitening Initialization": {
+    "name": "Implement Patch-Whitening Initialization",
+    "description": "Implement the patch-whitening initialization for the first convolutional layer as described in the paper. This involves initializing the layer's weights based on the eigenvectors of the covariance matrix of 2x2 patches across the training distribution.",
+    "relevant_paper_text": "Following Page (2019); tysam-code (2023) we initialize the first convolutional layer as a patch-whitening transformation. The layer is a 2x2 convolution with 24 channels. Following tysam-code (2023) the first 12 filters are initialized as the eigenvectors of the covariance matrix of 2x2 patches across the training distribution, so that their outputs have identity covariance matrix. The second 12 filters are initialized as the negation of the first 12, so that input information is preserved through the activation which follows.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.6,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.1,
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correct implementation of 2x2 convolution with 24 channels",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Accurate calculation of the covariance matrix of 2x2 patches across the training distribution",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Correct computation of eigenvectors from the covariance matrix",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Proper initialization of the first 12 filters with the computed eigenvectors",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Correct initialization of the second 12 filters as negations of the first 12",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Verification that the outputs of the first 12 filters have identity covariance matrix",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Efficient implementation of the patch-whitening initialization process",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a specific mathematical procedure with well-defined steps that can be objectively verified. The rubric provides clear criteria that align with these verifiable aspects of the implementation. Key points that make this task scorable include:\n\n1. The task specifies exact dimensions and parameters (2x2 convolution, 24 channels) that can be programmatically checked.\n2. It requires mathematical operations (covariance matrix calculation, eigenvector computation) whose correctness can be verified through numerical comparisons.\n3. The initialization process for the filters is precisely defined and can be inspected programmatically.\n4. The rubric criteria closely match the key components of the implementation, making it straightforward to assess each aspect.\n5. Most of the criteria are quantitative in nature, allowing for objective scoring.\n6. Even the efficiency criterion, while somewhat subjective, can be evaluated through benchmarking or complexity analysis.\n\nGiven these factors, it would be feasible to create a Python function that could automatically verify the correctness of an implementation of this patch-whitening initialization, covering all the key aspects specified in the task description and rubric."
+    }
+  },
+  "Implement Multi-Crop Test-Time Augmentation": {
+    "name": "Implement Multi-Crop Test-Time Augmentation",
+    "description": "Implement the multi-crop test-time augmentation (TTA) method described in the paper. This involves running the trained network on six augmented views of each test image and combining the outputs using a weighted average.",
+    "relevant_paper_text": "To generate predictions, we run the trained network on six augmented views of each test image: the unmodified input, a version which is translated up-and-to-the-left by one pixel, a version which is translated down-and-to-the-right by one pixel, and the mirrored versions of all three. Predictions are made using a weighted average of all six outputs, where the two views of the untranslated image are weighted by 0.25 each, and the remaining four views are weighted by 0.125 each.",
+    "scoring_feasibility": 9,
+    "llm_tractability": 0.7,
+    "expert_tractability": 0.95,
+    "layman_tractability": 0.4,
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correct implementation of six augmented views (unmodified, translated up-left, translated down-right, and mirrored versions)",
+          "importance": 30.0
+        },
+        {
+          "criterion": "Accurate application of weighted average for combining outputs (0.25 for untranslated, 0.125 for others)",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Proper integration with the existing trained network",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Efficient implementation to handle multiple test images",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Correct handling of edge cases (e.g., image boundaries for translations)",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable for several reasons:\n\n1. The task description provides clear, specific requirements for the multi-crop test-time augmentation method, including exact augmentations and weightings.\n\n2. The rubric offers objective criteria that can be directly translated into testable components of a scoring function. Each criterion is quantifiable and can be verified programmatically.\n\n3. The implementation involves well-defined image processing operations (translations, mirroring) and mathematical calculations (weighted averaging) that can be objectively assessed.\n\n4. The expected output (combined predictions from six augmented views) can be precisely calculated and compared against a reference implementation.\n\n5. Edge cases, such as handling image boundaries during translations, are explicitly mentioned in the rubric and can be tested systematically.\n\n6. The high estimated scoring feasibility (9/10) suggests that experts consider this task to be highly amenable to objective scoring.\n\nGiven these factors, it would be possible to write a Python function that objectively scores an implementation of this task, verifying that all key functionalities are implemented as specified. The function could test each augmentation, verify the correct application of weights, and assess the overall integration and efficiency of the implementation."
+    }
+  },
+  "Implement Identity Initialization for Convolutions": {
+    "name": "Implement Identity Initialization for Convolutions",
+    "description": "Implement the identity initialization method for convolutional layers after the first layer, as described in the paper. This involves initializing the first M filters of each convolution with N>=M outputs as an identity transform of the input.",
+    "relevant_paper_text": "We initialize all convolutions after the first as partial identity transforms. That is, for a convolution with M input channels and N>=M outputs, we initialize its first M filters to an identity transform of the input, and leave the remaining N-M to their default initialization.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.7,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.2,
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correct implementation of identity initialization for convolutional layers after the first layer",
+          "importance": 35.0
+        },
+        {
+          "criterion": "Proper handling of cases where N >= M (number of outputs >= number of inputs)",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Accurate initialization of the first M filters as identity transforms",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Correct default initialization for the remaining N-M filters",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Efficiency of the implementation",
+          "importance": 5.0
+        },
+        {
+          "criterion": "Code readability and documentation",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a specific initialization method for convolutional layers with clear, well-defined requirements. A Python function can be written to objectively verify the key aspects of the implementation, including:\n\n1. Checking if the initialization is applied to the correct layers (after the first layer).\n2. Verifying that the first M filters are initialized as identity transforms for N>=M outputs.\n3. Ensuring that the remaining N-M filters retain their default initialization.\n4. Testing the implementation with various input sizes to confirm proper handling of N >= M cases.\n\nThe rubric provides specific criteria that can be programmatically checked, such as correct implementation, proper handling of cases, and accurate initialization. While some aspects like code efficiency and readability might require more sophisticated evaluation, the core functionality can be objectively tested. The high estimated scoring feasibility (8/10) also supports the conclusion that this task is scorable using a Python function."
+    }
+  },
+  "Implement Lookahead Optimization": {
+    "name": "Implement Lookahead Optimization",
+    "description": "Implement the Lookahead optimization method as described in the paper. This involves maintaining a slow-moving copy of the model parameters and periodically updating the fast-moving parameters towards the slow-moving ones.",
+    "relevant_paper_text": "Following tysam-code (2023), we use Lookahead (Zhang et al., 2019) optimization. We note that Lookahead has also been found effective in prior work on training speed for ResNet-18 (Moreau et al., 2022).",
+    "scoring_feasibility": 7,
+    "llm_tractability": 0.6,
+    "expert_tractability": 0.85,
+    "layman_tractability": 0.1,
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correct implementation of the Lookahead algorithm",
+          "importance": 35.0
+        },
+        {
+          "criterion": "Proper maintenance of slow-moving and fast-moving parameter copies",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Accurate periodic update mechanism for fast-moving parameters",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Integration with existing optimization framework",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Performance improvement in model training",
+          "importance": 5.0
+        },
+        {
+          "criterion": "Code readability and documentation",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because:\n\n1. The Lookahead optimization algorithm has a well-defined structure that can be verified programmatically.\n2. The main components of the implementation (parameter maintenance, update mechanism) can be objectively checked through code inspection and unit tests.\n3. The rubric provides clear, measurable criteria that align well with automated testing capabilities.\n4. Performance improvements can be quantitatively measured through benchmarks.\n5. Code quality and integration aspects can be assessed using standard development tools.\n\nWhile some subjective judgment might be needed for assessing code readability, the majority of the implementation can be objectively scored. Therefore, it is feasible to create a Python function that can verify the key functionality and score the implementation based on the given rubric."
+    }
+  }
+}

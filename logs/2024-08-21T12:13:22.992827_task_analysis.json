@@ -1,0 +1,116 @@
+{
+  "Implement alternating flip data augmentation": {
+    "name": "Implement alternating flip data augmentation",
+    "description": "Implement the alternating flip data augmentation technique described in the paper. This involves flipping images horizontally in a deterministic alternating pattern across epochs, rather than randomly, to reduce redundancy.",
+    "relevant_paper_text": "To address this, we propose to modify standard random horizontal flipping augmentation as follows. For the first epoch, we randomly flip 50% of inputs as usual. Then on epochs {2,4,6, . . .}, we flip only those inputs which were not flipped in the first epoch, and on epochs {3,5,7, . . .}, we flip only those inputs which were flipped in the first epoch.",
+    "rubric": {
+      "rubric": [
+        {
+          "task": "Implement alternating flip data augmentation",
+          "criterion": "Correctly implement the deterministic alternating pattern for horizontal flipping across epochs",
+          "importance": 30.0
+        },
+        {
+          "task": "Implement alternating flip data augmentation",
+          "criterion": "Ensure 50% of inputs are randomly flipped in the first epoch",
+          "importance": 20.0
+        },
+        {
+          "task": "Implement alternating flip data augmentation",
+          "criterion": "Correctly flip inputs on even epochs (2,4,6,...) that were not flipped in the first epoch",
+          "importance": 20.0
+        },
+        {
+          "task": "Implement alternating flip data augmentation",
+          "criterion": "Correctly flip inputs on odd epochs (3,5,7,...) that were flipped in the first epoch",
+          "importance": 20.0
+        },
+        {
+          "task": "Implement alternating flip data augmentation",
+          "criterion": "Ensure the implementation reduces redundancy compared to random flipping",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is objectively scorable because:\n\n1. The alternating flip data augmentation technique has a clear, deterministic pattern that can be programmatically verified.\n2. The rubric provides specific, measurable criteria that directly correspond to the required functionality.\n3. Each aspect of the implementation (initial random flipping, alternating pattern across epochs, correct flipping based on even/odd epochs) can be objectively tested and verified.\n4. A Python function could be written to:\n   a. Check if 50% of inputs are randomly flipped in the first epoch\n   b. Verify the correct alternating pattern of flipping across subsequent epochs\n   c. Ensure that the correct images are flipped on even and odd epochs based on their first-epoch status\n   d. Compare the redundancy of this method to random flipping\n5. The implementation's output can be directly compared to the expected behavior described in the paper.\n6. There are no subjective elements in the task or rubric that would require human judgment to evaluate.\n\nGiven these factors, it would be possible to create a Python function that objectively scores an implementation of this task, verifying that all key functionality is implemented as specified in both the task description and the rubric."
+    }
+  },
+  "Implement patch-whitening initialization": {
+    "name": "Implement patch-whitening initialization",
+    "description": "Implement the patch-whitening initialization technique for the first convolutional layer as described in the paper. This involves initializing the filters based on the eigenvectors of the covariance matrix of image patches.",
+    "relevant_paper_text": "Following Page (2019); tysam-code (2023) we initialize the first convolutional layer as a patch-whitening transformation. The layer is a 2x2 convolution with 24 channels. Following tysam-code (2023) the first 12 filters are initialized as the eigenvectors of the covariance matrix of 2x2 patches across the training distribution, so that their outputs have identity covariance matrix. The second 12 filters are initialized as the negation of the first 12, so that input information is preserved through the activation which follows.",
+    "rubric": {
+      "rubric": [
+        {
+          "task": "Implement patch-whitening initialization",
+          "criterion": "Correctly compute the covariance matrix of 2x2 patches from the training distribution",
+          "importance": 25.0
+        },
+        {
+          "task": "Implement patch-whitening initialization",
+          "criterion": "Accurately calculate the eigenvectors of the covariance matrix",
+          "importance": 25.0
+        },
+        {
+          "task": "Implement patch-whitening initialization",
+          "criterion": "Initialize the first 12 filters with the computed eigenvectors",
+          "importance": 20.0
+        },
+        {
+          "task": "Implement patch-whitening initialization",
+          "criterion": "Initialize the second 12 filters as the negation of the first 12",
+          "importance": 20.0
+        },
+        {
+          "task": "Implement patch-whitening initialization",
+          "criterion": "Ensure the output of the initialized filters has an identity covariance matrix",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a well-defined mathematical procedure with clear, objective criteria for evaluation. The rubric provides specific, measurable aspects of the implementation that can be verified through code inspection and numerical tests. A Python function can be written to automatically check the presence and correctness of each step in the implementation, verify the mathematical properties of the initialized filters, and test the output against expected results. The quantitative nature of the task (involving matrix computations and specific initialization procedures) lends itself well to automated testing and objective scoring. Therefore, it is possible to write a Python function to objectively score an implementation of this task, verifying that key functionality is implemented as specified."
+    }
+  },
+  "Implement identity initialization for convolutional layers": {
+    "name": "Implement identity initialization for convolutional layers",
+    "description": "Implement the identity initialization technique for convolutional layers after the first layer, as described in the paper. This involves initializing a portion of each layer's filters as identity transforms.",
+    "relevant_paper_text": "We initialize all convolutions after the first as partial identity transforms. That is, for a convolution with M input channels and N\u2265M outputs, we initialize its first M filters to an identity transform of the input, and leave the remaining N\u2212M to their default initialization.",
+    "rubric": {
+      "rubric": [
+        {
+          "task": "Implement identity initialization for convolutional layers",
+          "criterion": "Correctly initialize the first M filters of each convolutional layer (after the first) as identity transforms",
+          "importance": 40.0
+        },
+        {
+          "task": "Implement identity initialization for convolutional layers",
+          "criterion": "Properly handle cases where the number of output channels (N) is greater than or equal to the number of input channels (M)",
+          "importance": 25.0
+        },
+        {
+          "task": "Implement identity initialization for convolutional layers",
+          "criterion": "Leave the remaining N-M filters with their default initialization",
+          "importance": 20.0
+        },
+        {
+          "task": "Implement identity initialization for convolutional layers",
+          "criterion": "Apply the initialization only to convolutional layers after the first layer",
+          "importance": 10.0
+        },
+        {
+          "task": "Implement identity initialization for convolutional layers",
+          "criterion": "Ensure the implementation is compatible with the existing neural network architecture",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a specific technical feature with clear, objective criteria as outlined in the rubric. Each aspect of the implementation can be verified programmatically:\n\n1. We can check if the correct number of filters (M) are initialized as identity transforms for each layer.\n2. We can test with various combinations of input (M) and output (N) channels to ensure correct handling.\n3. We can verify that N-M filters retain their default initialization.\n4. We can confirm that the initialization is only applied to layers after the first one.\n5. We can test the implementation within the existing neural network architecture to ensure compatibility.\n\nA Python function can be written to perform these checks automatically, comparing the implemented initialization against the expected behavior described in the task and rubric. This allows for objective scoring of the implementation, verifying that all key functionality is correctly implemented as specified."
+    }
+  }
+}

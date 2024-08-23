@@ -1,0 +1,152 @@
+{
+  "Implement alternating flip data augmentation": {
+    "name": "Implement alternating flip data augmentation",
+    "description": "Implement the alternating flip data augmentation technique described in the paper. This involves flipping images horizontally in a deterministic alternating pattern across epochs, rather than randomly.",
+    "baseline": "Standard random horizontal flipping augmentation",
+    "skills": [
+      "PyTorch",
+      "Computer Vision",
+      "Data Augmentation"
+    ],
+    "relevant_paper_text": "We propose to modify standard random horizontal flipping augmentation as follows. For the first epoch, we randomly flip 50% of inputs as usual. Then on epochs {2,4,6,...}, we flip only those inputs which were not flipped in the first epoch, and on epochs {3,5,7,...}, we flip only those inputs which were flipped in the first epoch.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.7,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.3,
+    "scoring_llm_tractability": 0.8,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "The implementation correctly flips 50% of inputs randomly in the first epoch.",
+          "importance": 20.0
+        },
+        {
+          "criterion": "On even-numbered epochs (2,4,6,...), the implementation flips only those inputs which were not flipped in the first epoch.",
+          "importance": 25.0
+        },
+        {
+          "criterion": "On odd-numbered epochs (3,5,7,...), the implementation flips only those inputs which were flipped in the first epoch.",
+          "importance": 25.0
+        },
+        {
+          "criterion": "The implementation maintains consistency in flipping patterns across multiple runs with the same random seed.",
+          "importance": 15.0
+        },
+        {
+          "criterion": "The implementation works correctly with the CIFAR-10 dataset.",
+          "importance": 10.0
+        },
+        {
+          "criterion": "The implementation is compatible with PyTorch's data loading and augmentation pipeline.",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "It is possible to write a Python function to objectively score an implementation of this task. The scoring function can generate test images, run the implementation over multiple epochs, and verify the correct flipping patterns. Key aspects like random flipping in the first epoch, alternating patterns in subsequent epochs, and consistency across runs with the same random seed can be objectively measured. The function can also verify compatibility with the CIFAR-10 dataset and PyTorch's data loading pipeline. While we can't make assumptions about the specific implementation, we can focus on testing the correctness of the output and behavior, which aligns with the task description and rubric criteria. The scoring can be done objectively without needing to understand the internal workings of the implementation."
+    }
+  },
+  "Implement patch-whitening initialization": {
+    "name": "Implement patch-whitening initialization",
+    "description": "Implement the patch-whitening initialization technique for the first convolutional layer as described in the paper.",
+    "baseline": "Standard random initialization",
+    "skills": [
+      "PyTorch",
+      "Linear Algebra",
+      "Neural Network Initialization"
+    ],
+    "relevant_paper_text": "Following Page (2019); tysam-code (2023) we initialize the first convolutional layer as a patch-whitening transformation. The layer is a 2x2 convolution with 24 channels. Following tysam-code (2023) the first 12 filters are initialized as the eigenvectors of the covariance matrix of 2x2 patches across the training distribution, so that their outputs have identity covariance matrix. The second 12 filters are initialized as the negation of the first 12, so that input information is preserved through the activation which follows.",
+    "scoring_feasibility": 7,
+    "llm_tractability": 0.5,
+    "expert_tractability": 0.8,
+    "layman_tractability": 0.1,
+    "scoring_llm_tractability": 0.6,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "The implemented initialization uses a 2x2 convolution with 24 channels for the first convolutional layer.",
+          "importance": 15.0
+        },
+        {
+          "criterion": "The first 12 filters are initialized as the eigenvectors of the covariance matrix of 2x2 patches across the training distribution.",
+          "importance": 25.0
+        },
+        {
+          "criterion": "The output of the first 12 filters has an identity covariance matrix when applied to the training data.",
+          "importance": 20.0
+        },
+        {
+          "criterion": "The second 12 filters are initialized as the negation of the first 12 filters.",
+          "importance": 15.0
+        },
+        {
+          "criterion": "The initialization preserves input information through the activation which follows, as measured by comparing input and output mutual information.",
+          "importance": 15.0
+        },
+        {
+          "criterion": "The implementation is done using PyTorch and can be applied to the CIFAR-10 dataset.",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "The task of implementing patch-whitening initialization can be objectively scored through a Python function. The scoring function can verify the key aspects of the implementation, including the convolution layer structure (2x2, 24 channels), the initialization of the first 12 filters using eigenvectors, the negation of these filters for the second 12, and the use of PyTorch. The covariance matrix of the output can be computed and compared to an identity matrix for verification. While some aspects like the exact computation of eigenvectors may vary slightly, the overall structure and properties of the initialization can be objectively assessed. The scoring function can use the CIFAR-10 dataset to perform necessary checks on the initialization's properties. Although verifying the preservation of input information through activation might be complex, the core functionality specified in the task description can be objectively evaluated, making this task scorable."
+    }
+  },
+  "Implement multi-crop test-time augmentation": {
+    "name": "Implement multi-crop test-time augmentation",
+    "description": "Implement the multi-crop test-time augmentation technique described in the paper, which involves evaluating the model on multiple augmented versions of each test image.",
+    "baseline": "No test-time augmentation",
+    "skills": [
+      "PyTorch",
+      "Computer Vision",
+      "Test-Time Augmentation"
+    ],
+    "relevant_paper_text": "To generate predictions, we run the trained network on six augmented views of each test image: the unmodified input, a version which is translated up-and-to-the-left by one pixel, a version which is translated down-and-to-the-right by one pixel, and the mirrored versions of all three. Predictions are made using a weighted average of all six outputs, where the two views of the untranslated image are weighted by 0.25 each, and the remaining four views are weighted by 0.125 each.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.8,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.4,
+    "scoring_llm_tractability": 0.9,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset",
+      "Trained model"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "The implementation correctly applies the six specified augmentations to each test image: unmodified, translated up-and-left by one pixel, translated down-and-right by one pixel, and mirrored versions of all three.",
+          "importance": 30.0
+        },
+        {
+          "criterion": "The model's predictions are generated using a weighted average of all six outputs, with the correct weights applied: 0.25 for each of the two untranslated views, and 0.125 for each of the four translated views.",
+          "importance": 30.0
+        },
+        {
+          "criterion": "The implementation correctly handles the CIFAR-10 dataset and the provided trained model.",
+          "importance": 20.0
+        },
+        {
+          "criterion": "The implementation produces final predictions for each test image that are different from those produced by the baseline (no test-time augmentation).",
+          "importance": 10.0
+        },
+        {
+          "criterion": "The implementation is computationally efficient, processing the entire test set in a reasonable amount of time (e.g., no more than 10 times slower than the baseline).",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because a Python function can be written to objectively verify the key aspects of the implementation. The scoring function can provide test inputs (CIFAR-10 images and a trained model) and analyze the outputs to ensure that:\n\n1. The function produces different results compared to a baseline without augmentation, indicating that augmentations are being applied.\n2. The output predictions fall within expected ranges and formats for the CIFAR-10 dataset.\n3. The final predictions are consistent with a weighted average of multiple inputs (by comparing to known test cases).\n4. The execution time is within acceptable limits compared to the baseline.\n\nWhile the scoring function may not be able to verify every internal detail (such as the exact pixel-level translations), it can comprehensively test the correctness of the implementation's outputs and performance characteristics. This level of verification is sufficient to objectively score the implementation and ensure that the key functionality is correctly implemented as specified."
+    }
+  }
+}

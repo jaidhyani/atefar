@@ -1,0 +1,164 @@
+{
+  "Implement alternating flip data augmentation": {
+    "name": "Implement alternating flip data augmentation",
+    "description": "Implement the alternating flip data augmentation technique described in the paper. This involves flipping images horizontally in a deterministic alternating pattern across epochs, rather than randomly.",
+    "baseline": "Standard random horizontal flipping augmentation",
+    "skills": [
+      "PyTorch",
+      "Computer Vision",
+      "Data Augmentation"
+    ],
+    "relevant_paper_text": "We propose to modify standard random horizontal flipping augmentation as follows. For the first epoch, we randomly flip 50% of inputs as usual. Then on epochs {2,4,6,...}, we flip only those inputs which were not flipped in the first epoch, and on epochs {3,5,7,...}, we flip only those inputs which were flipped in the first epoch.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.7,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.3,
+    "scoring_llm_tractability": 0.8,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correctly implements alternating flip pattern across epochs as described in the paper",
+          "importance": 30.0
+        },
+        {
+          "criterion": "Maintains consistent flipping for each image across odd and even epochs",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Integrates seamlessly with PyTorch data loading and augmentation pipeline",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Correctly handles the first epoch with 50% random flipping",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Efficiently tracks which images were flipped in the first epoch",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Works correctly with the CIFAR-10 dataset",
+          "importance": 5.0
+        },
+        {
+          "criterion": "Includes appropriate error handling and edge cases (e.g., dataset size changes)",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a specific, well-defined data augmentation technique in PyTorch. The rubric provides clear, objective criteria for evaluation, most of which can be verified through automated testing. The alternating flip pattern is deterministic and can be checked programmatically across epochs. The task requires working with the CIFAR-10 dataset, which is standardized and easily accessible. While some aspects might require minimal subjective judgment (e.g., code quality for seamless integration), the core functionality and correctness can be objectively measured. The high scoring feasibility rating (8/10) in the task description further supports this conclusion. A Python function can be written to verify the implementation against the rubric criteria, testing for correct flipping patterns, consistency across epochs, integration with PyTorch, and performance with the CIFAR-10 dataset."
+    }
+  },
+  "Implement patch-whitening initialization": {
+    "name": "Implement patch-whitening initialization",
+    "description": "Implement the patch-whitening initialization technique for the first convolutional layer as described in the paper.",
+    "baseline": "Standard random initialization",
+    "skills": [
+      "PyTorch",
+      "Linear Algebra",
+      "Neural Network Initialization"
+    ],
+    "relevant_paper_text": "Following Page (2019); tysam-code (2023) we initialize the first convolutional layer as a patch-whitening transformation. The layer is a 2x2 convolution with 24 channels. Following tysam-code (2023) the first 12 filters are initialized as the eigenvectors of the covariance matrix of 2x2 patches across the training distribution, so that their outputs have identity covariance matrix. The second 12 filters are initialized as the negation of the first 12, so that input information is preserved through the activation which follows.",
+    "scoring_feasibility": 7,
+    "llm_tractability": 0.5,
+    "expert_tractability": 0.8,
+    "layman_tractability": 0.1,
+    "scoring_llm_tractability": 0.6,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Implements a 2x2 convolutional layer with 24 channels",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Calculates the covariance matrix of 2x2 patches across the training distribution",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Computes eigenvectors of the covariance matrix",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Initializes first 12 filters with eigenvectors",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Initializes second 12 filters as negation of the first 12",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Verifies that the output of the first 12 filters has identity covariance matrix",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Implements the initialization using PyTorch",
+          "importance": 10.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because:\n1. The task description provides clear, specific requirements for the implementation.\n2. The rubric outlines 7 distinct, objective criteria that can be programmatically verified.\n3. Each criterion involves concrete, measurable aspects of the implementation, such as layer structure, matrix calculations, and weight initializations.\n4. PyTorch provides functions and tools that can be used to inspect and verify each aspect of the implementation.\n5. The mathematical nature of the task (involving linear algebra and neural network concepts) lends itself well to programmatic verification.\n6. The rubric's criteria are comprehensive, covering all key aspects of the required implementation.\n\nTherefore, it would be possible to write a Python function that objectively scores an implementation of this task, verifying that all key functionality is implemented as specified in the rubric."
+    }
+  },
+  "Implement multi-crop test-time augmentation": {
+    "name": "Implement multi-crop test-time augmentation",
+    "description": "Implement the multi-crop test-time augmentation technique described in the paper, which involves evaluating the model on multiple augmented versions of each test image.",
+    "baseline": "No test-time augmentation",
+    "skills": [
+      "PyTorch",
+      "Computer Vision",
+      "Test-Time Augmentation"
+    ],
+    "relevant_paper_text": "To generate predictions, we run the trained network on six augmented views of each test image: the unmodified input, a version which is translated up-and-to-the-left by one pixel, a version which is translated down-and-to-the-right by one pixel, and the mirrored versions of all three. Predictions are made using a weighted average of all six outputs, where the two views of the untranslated image are weighted by 0.25 each, and the remaining four views are weighted by 0.125 each.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.8,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.4,
+    "scoring_llm_tractability": 0.9,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset",
+      "Trained model"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Implements six augmented views of each test image as described in the paper",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Correctly applies the specified weights to each augmented view",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Correctly calculates the weighted average of all six outputs",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Implements the augmentation process efficiently using PyTorch",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Correctly handles the CIFAR-10 dataset for testing",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Demonstrates improved performance compared to the baseline (no test-time augmentation)",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a specific test-time augmentation technique with clearly defined steps and criteria. The rubric provides objective measures that can be programmatically verified, such as the correct implementation of six augmented views, proper application of weights, and accurate calculation of weighted averages. The use of PyTorch and the CIFAR-10 dataset allows for standardized testing environments. Performance improvements can be quantitatively measured against the baseline. All aspects of the implementation, from the augmentation process to the final output, can be automatically checked through code analysis and output verification. The well-defined nature of the task, combined with the specific criteria in the rubric, makes it feasible to create a Python function that can objectively score an implementation of this task."
+    }
+  }
+}

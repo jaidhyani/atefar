@@ -1,0 +1,153 @@
+{
+  "Implement alternating flip data augmentation": {
+    "name": "Implement alternating flip data augmentation",
+    "description": "Implement the alternating flip data augmentation technique described in the paper. This involves flipping images horizontally in an alternating pattern across epochs rather than randomly, to reduce redundancy.",
+    "baseline": "Standard random horizontal flipping augmentation",
+    "skills": [
+      "PyTorch",
+      "Computer Vision",
+      "Data Augmentation"
+    ],
+    "relevant_paper_text": "We propose to modify standard random horizontal flipping augmentation as follows. For the first epoch, we randomly flip 50% of inputs as usual. Then on epochs {2,4,6, . . .}, we flip only those inputs which were not flipped in the first epoch, and on epochs {3,5,7, . . .}, we flip only those inputs which were flipped in the first epoch.",
+    "scoring_feasibility": 9,
+    "llm_tractability": 0.8,
+    "expert_tractability": 0.95,
+    "layman_tractability": 0.3,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correctly implements horizontal flipping for 50% of inputs in the first epoch",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Correctly implements flipping pattern for even-numbered epochs (2,4,6,...)",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Correctly implements flipping pattern for odd-numbered epochs (3,5,7,...)",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Maintains consistent flipping pattern across all epochs for each input",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Efficiently tracks which inputs were flipped in the first epoch",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Handles edge cases (e.g., new data introduced mid-training) appropriately",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because:\n\n1. The task description provides clear, unambiguous instructions for implementing the alternating flip data augmentation technique.\n2. The rubric outlines specific, measurable criteria that directly correspond to the task requirements.\n3. The nature of the task (image flipping based on deterministic rules) lends itself well to automated verification.\n4. Each rubric criterion can be translated into testable conditions in a Python function.\n5. The scoring function can verify the correct implementation of the flipping pattern across epochs, ensuring consistency for each input.\n6. Edge cases, such as handling new data introduced mid-training, are explicitly mentioned and can be incorporated into the scoring logic.\n7. The high estimated scoring feasibility (9/10) suggests that experts believe this task can be objectively scored.\n\nGiven these factors, it would be possible to write a Python function that objectively scores an implementation of this task, verifying that key functionality is implemented as specified in the rubric."
+    }
+  },
+  "Implement patch-whitening initialization": {
+    "name": "Implement patch-whitening initialization",
+    "description": "Implement the patch-whitening initialization technique for the first convolutional layer as described in the paper. This involves initializing the filters based on the eigenvectors of the covariance matrix of image patches.",
+    "baseline": "Standard random initialization of convolutional layers",
+    "skills": [
+      "PyTorch",
+      "Linear Algebra",
+      "Neural Network Initialization"
+    ],
+    "relevant_paper_text": "Following Page (2019); tysam-code (2023) we initialize the first convolutional layer as a patch-whitening transformation. The layer is a 2x2 convolution with 24 channels. Following tysam-code (2023) the first 12 filters are initialized as the eigenvectors of the covariance matrix of 2x2 patches across the training distribution, so that their outputs have identity covariance matrix. The second 12 filters are initialized as the negation of the first 12, so that input information is preserved through the activation which follows.",
+    "scoring_feasibility": 8,
+    "llm_tractability": 0.6,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.1,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correctly implements a 2x2 convolutional layer with 24 channels",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Calculates the covariance matrix of 2x2 patches across the training distribution",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Computes the eigenvectors of the covariance matrix",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Initializes the first 12 filters with the eigenvectors of the covariance matrix",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Initializes the second 12 filters as the negation of the first 12",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Ensures the outputs of the first 12 filters have an identity covariance matrix",
+          "importance": 10.0
+        },
+        {
+          "criterion": "Preserves input information through the activation which follows",
+          "importance": 5.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because it involves implementing a specific initialization technique with clear, measurable criteria. The rubric provides detailed, objective benchmarks that can be programmatically verified. Key aspects such as the convolutional layer structure, covariance matrix calculation, eigenvector computation, and filter initialization can all be checked through code. Mathematical properties like the identity covariance matrix of outputs can be verified computationally. The high estimated scoring feasibility (8/10) further supports this conclusion. While some criteria may require more complex verification (e.g., preserving input information), overall, the task lends itself well to objective, automated scoring through a Python function."
+    }
+  },
+  "Implement multi-crop test-time augmentation": {
+    "name": "Implement multi-crop test-time augmentation",
+    "description": "Implement the multi-crop test-time augmentation strategy described in the paper. This involves evaluating the model on multiple augmented versions of each test image and aggregating the results.",
+    "baseline": "No test-time augmentation",
+    "skills": [
+      "PyTorch",
+      "Computer Vision",
+      "Test-Time Augmentation"
+    ],
+    "relevant_paper_text": "To generate predictions, we run the trained network on six augmented views of each test image: the unmodified input, a version which is translated up-and-to-the-left by one pixel, a version which is translated down-and-to-the-right by one pixel, and the mirrored versions of all three. Predictions are made using a weighted average of all six outputs, where the two views of the untranslated image are weighted by 0.25 each, and the remaining four views are weighted by 0.125 each.",
+    "scoring_feasibility": 9,
+    "llm_tractability": 0.7,
+    "expert_tractability": 0.9,
+    "layman_tractability": 0.2,
+    "asset_prerequisites": [
+      "CIFAR-10 dataset",
+      "Trained model"
+    ],
+    "rubric": {
+      "rubric": [
+        {
+          "criterion": "Correctly implements six augmented views of each test image as described in the paper",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Applies the specified translations (up-and-to-the-left by one pixel, down-and-to-the-right by one pixel) accurately",
+          "importance": 20.0
+        },
+        {
+          "criterion": "Correctly implements mirroring for all three versions of the image",
+          "importance": 15.0
+        },
+        {
+          "criterion": "Applies the correct weights to each augmented view in the final prediction (0.25 for untranslated, 0.125 for others)",
+          "importance": 25.0
+        },
+        {
+          "criterion": "Correctly aggregates predictions using weighted average of all six outputs",
+          "importance": 15.0
+        }
+      ]
+    },
+    "scorable": {
+      "judgement": "True",
+      "justification": "This task is scorable because:\n1. The task description provides clear, specific instructions for implementation.\n2. The rubric criteria are objective and directly related to the task requirements.\n3. Each criterion can be programmatically verified through automated testing.\n4. The nature of the task (image processing and numerical computations) lends itself well to automated verification.\n5. A test function can be written to generate test cases, apply the required augmentations, and verify the correct application of weights and aggregation of results.\n6. The high estimated scoring feasibility (9/10) in the task description supports this conclusion.\n\nTherefore, it would be possible to write a Python function to objectively score an implementation of this task, verifying that key functionality is implemented as specified."
+    }
+  }
+}
