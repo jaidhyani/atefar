@@ -119,16 +119,6 @@ class TaskCandidate(BaseModel):
 
     def __str__(self):
         return self.model_dump_json()
-        # return dedent(f"""
-        # Task: {self.name}
-        # Description: {self.description}
-        # Relevant Paper Text: {self.relevant_paper_text}
-        # Estimated Scoring Feasibility (1-10): {self.scoring_feasibility}
-        # Estimated Implementation LLM Tractability (0-1): {self.llm_tractability}
-        # Estimated Implementation Expert Tractability (0-1): {self.expert_tractability}
-        # Estimated Implementation Layman Tractability (0-1): {self.layman_tractability}
-        # Asset Prerequisites: {", ".join(self.asset_prerequisites)}
-        # """)
 
 class TaskCandidates(BaseModel):
     tasks: List[TaskCandidate] = Field(description="Tasks extracted from the paper")
@@ -271,52 +261,3 @@ with open(f"{now}_logs.json", "w") as f:
     json.dump(logs, f, indent=2)
 with open(f"{now}_task_analysis.json", "w") as f:
     json.dump(results.task_analysis, f, indent=2)
-
-# try:
-    # candidate_critiques = []
-    # candidate_iterations = 0
-    # critique = ""
-    # while candidate_iterations < 3:
-        # task_candidate_response = task_candidates_predictor(paper_text=paper_text, guidance=critique)
-        # task_candidate_critique_response = task_candidates_self_critique_predictor(
-            # candidate_input=paper_text,
-            # candidate_output=str(task_candidate_response.task_candidates),
-            # requirements="Extract all promising task candidates from paper. " + TaskCandidate.__doc__,
-            # attempt_num=candidate_iterations,
-            # previous_critiques="\n".join(candidate_critiques)
-        # )
-        # candidate_iterations += 1
-        # critique = task_candidate_critique_response.self_critique
-        # candidate_critiques.append(critique)
-
-        # if not task_candidate_critique_response.should_retry:
-            # break
-
-    # all_task_analysis = {}
-    # for task in task_candidate_response.task_candidates.tasks:
-        # assert isinstance(task, TaskCandidate)
-        # task_analysis = task.model_dump()
-        # task_rubric_response = task_rubrics_predictor(task_candidate=str(task))
-        # task_analysis["rubric"] = task_rubric_response.task_rubric.model_dump()
-        # scorable_response = scorable_judge(task=str(task), rubric=str(task_rubric_response.task_rubric))
-        # task_analysis["scorable"] = {"judgement": scorable_response.scorable, "justification": scorable_response.justification}
-        # print(task.name, scorable_response)
-        # all_task_analysis[task.name] = task_analysis
-# except Exception as e:
-    # print("Error:", e)
-    # print("History saved to history.json")
-    # raise e
-# finally:
-    # now = datetime.now().isoformat()
-    # with open(f"{now}_logs.json", "w") as f:
-        # json.dump(logs, f, indent=2)
-    # with open(f"{now}_task_analysis.json", "w") as f:
-        # json.dump(all_task_analysis, f, indent=2)
-
-
-
-
-# def pdf_to_tasks(pdf_path):
-    # text = extract_text_from_pdf(pdf_path)
-    # tasks = dspy.text_to_tasks(text)
-    # return tasks
